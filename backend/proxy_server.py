@@ -125,7 +125,7 @@ class GeminiLiveBridge:
         self.model_name = model_name if model_name.startswith("models/") else f"models/{model_name}"
         facts_str = "\n".join([f"- {f}" for f in (user_facts or [])])
         base_instruction = (
-            "You are an expert real-time conversational AI smartphone tech specialist and shopping assistant for PhoneVerse (mock-phone-store-641879769713.us-central1.run.app).\n"
+            "You are an expert real-time conversational AI smartphone tech specialist and shopping assistant for PhoneVerse.\n"
             "CRITICAL OPERATIONAL RULES:\n"
             "1. You MUST call `get_screen_content` FIRST at the start of every interaction to inspect the current page, active filters, all available options in `Available=[...]`, URL parameters, sort order, and visible phones.\n"
             "2. MODEL SERIES VS BRAND FILTERING:\n"
