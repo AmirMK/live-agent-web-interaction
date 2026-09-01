@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search & Filter Phones - PhoneVerse</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/agent-widget.css">
+  <link rel="icon" href="/assets/logo.jpeg">
+</head>
+<body>
+
+  <!-- Top Contact Bar -->
+  <div class="top-contact-bar">
+    <div class="top-contact-container">
+      <div class="contact-info-items">
+        <span class="contact-item">📞 <strong>Call Us:</strong> <a href="tel:18005550199">1-800-555-0199</a></span>
+        <span class="contact-item">🕒 <strong>Hours:</strong> Mon-Sat 9am-8pm EST</span>
+        <span class="contact-item">💬 <strong>Support:</strong> <a href="#chat">Live Chat Active</a></span>
+      </div>
+      <div class="top-badges-right">
+        <span class="badge-tag">⚡ Live Inventory</span>
+        <span class="badge-tag">🔒 2-Year Warranty</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="/index.html" class="logo-area">
+        <img src="/assets/logo.jpeg" alt="PhoneVerse Logo" class="logo-img">
+        <div class="logo-text-wrap">
+          <span class="logo-brand-title">PhoneVerse</span>
+          <span class="logo-brand-sub">The Smartphone Authority</span>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="/index.html" class="nav-link">Home</a>
+        <a href="/search.html" class="nav-link active">Browse Phones</a>
+        <a href="/index.html#trade-in-sec" class="nav-link">Trade-In</a>
+        <a href="/index.html#faq-sec" class="nav-link">FAQs</a>
+      </nav>
+      <div class="header-actions">
+        <a href="/index.html" class="btn-header-cta" style="background: var(--secondary);">
+          <span>←</span> Back to Home
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Search Container -->
+  <div class="page-container">
+    
+    <div class="search-results-layout">
+      
+      <!-- LEFT SIDEBAR: DYNAMIC FILTERS FOR ALL FIELDS (EXCEPT processor_type & full_description) -->
+      <aside class="sidebar-filter-card" id="search-filter-sidebar">
+        
+        <div class="sidebar-heading-wrap">
+          <h3 class="sidebar-title"><span>⚡</span> Filters & Specs</h3>
+          <button type="button" class="btn-reset-filters" id="btn-search-reset">Reset All</button>
+        </div>
+
+        <form id="search-filter-form" onsubmit="event.preventDefault();">
+
+          <!-- 1. Model Name / Keyword Search -->
+          <div class="filter-group">
+            <label class="filter-group-title" for="search-keyword-input">🔍 Model / Keyword</label>
+            <input type="text" id="search-keyword-input" class="form-select" placeholder="e.g. iPhone 13, Note 12...">
+          </div>
+
+          <!-- 2. Brand Filter -->
+          <div class="filter-group">
+            <label class="filter-group-title">🏷️ Brand (Click to Highlight)</label>
+            <div class="filter-pills-wrap" id="search-brand-checkboxes">
+              <!-- Dynamically populated from data.csv -->
+            </div>
+          </div>
+
+          <!-- 3. Operating System Filter -->
+          <div class="filter-group">
+            <label class="filter-group-title">⚙️ Operating System</label>
+            <div class="filter-pills-wrap" id="search-system-pills">
+              <!-- Dynamically populated (iOS, Android) -->
+            </div>
+          </div>
+
+          <!-- 4. Network Type Filter -->
+          <div class="filter-group">
+            <label class="filter-group-title">📶 Network Type</label>
+            <div class="filter-pills-wrap" id="search-network-checkboxes">
+              <!-- Dynamically populated (5G, 4G, 3G) -->
+            </div>
+          </div>
+
+          <!-- 5. Price Range Filter -->
+          <div class="filter-group">
+            <label class="filter-group-title">💰 Price Range ($)</label>
+            <div class="budget-range-wrap">
+              <div class="budget-inputs-row">
+                <input type="number" id="search-min-price" class="budget-input" placeholder="Min $" min="0">
+                <span class="budget-sep">—</span>
+                <input type="number" id="search-max-price" class="budget-input" placeholder="Max $" min="0">
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Rating Filter -->
+          <div class="filter-group">
+            <label class="filter-group-title">⭐ Customer Rating</label>
+            <div class="filter-pills-wrap" id="search-rating-pills">
+              <!-- Dynamically populated rating pills -->
+            </div>
+          </div>
+
+          <!-- 7. Storage Filter (Multi-Select Dropdown) -->
+          <div class="filter-group">
+            <label class="filter-group-title">💾 Internal Storage</label>
+            <div class="custom-multiselect" id="multiselect-storage">
+              <button type="button" class="multiselect-trigger" id="trigger-storage" aria-haspopup="listbox" aria-expanded="false">
+                <span class="multiselect-label-text">Select Storage...</span>
+                <span class="multiselect-count-badge" style="display:none;">0</span>
+                <span class="multiselect-arrow">▾</span>
+              </button>
+              <div class="multiselect-menu" id="menu-storage">
+                <div class="multiselect-actions-bar">
+                  <span>💾 Storage Capacities</span>
+                  <button type="button" class="multiselect-quick-clear" data-target="storage">Clear</button>
+                </div>
+                <div class="multiselect-options-list" id="search-storage-checkboxes">
+                  <!-- Dynamically populated (16 GB, 32 GB, 64 GB, 128 GB, 256 GB, etc.) -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. Color Filter -->
+          <div class="filter-group">
+            <label class="filter-group-title">🎨 Color</label>
+            <div class="color-swatches-grid" id="search-color-swatches">
+              <!-- Dynamically populated colors -->
+            </div>
+          </div>
+
+          <!-- 9. Display Resolution Category -->
+          <div class="filter-group">
+            <label class="filter-group-title">🖥️ Resolution Category</label>
+            <div class="filter-pills-wrap" id="search-resolution-checkboxes">
+              <!-- Dynamically populated (HD, Full HD, 2K, 4K, Quad HD) -->
+            </div>
+          </div>
+
+          <!-- 10. Detailed Resolution (Multi-Select Dropdown) -->
+          <div class="filter-group">
+            <label class="filter-group-title">📐 Detailed Resolution</label>
+            <div class="custom-multiselect" id="multiselect-detailed-res">
+              <button type="button" class="multiselect-trigger" id="trigger-detailed-res" aria-haspopup="listbox" aria-expanded="false">
+                <span class="multiselect-label-text">Select Detailed Resolution...</span>
+                <span class="multiselect-count-badge" style="display:none;">0</span>
+                <span class="multiselect-arrow">▾</span>
+              </button>
+              <div class="multiselect-menu" id="menu-detailed-res">
+                <div class="multiselect-actions-bar">
+                  <span>📐 Exact Pixel Dimensions</span>
+                  <button type="button" class="multiselect-quick-clear" data-target="detailed-res">Clear</button>
+                </div>
+                <div class="multiselect-options-list" id="search-detailed-res-pills">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 11. Primary Camera Resolution (Multi-Select Dropdown) -->
+          <div class="filter-group">
+            <label class="filter-group-title">📸 Primary Camera</label>
+            <div class="custom-multiselect" id="multiselect-camera">
+              <button type="button" class="multiselect-trigger" id="trigger-camera" aria-haspopup="listbox" aria-expanded="false">
+                <span class="multiselect-label-text">Select Camera MP...</span>
+                <span class="multiselect-count-badge" style="display:none;">0</span>
+                <span class="multiselect-arrow">▾</span>
+              </button>
+              <div class="multiselect-menu" id="menu-camera">
+                <div class="multiselect-actions-bar">
+                  <span>📸 Camera Sensors</span>
+                  <button type="button" class="multiselect-quick-clear" data-target="camera">Clear</button>
+                </div>
+                <div class="multiselect-options-list" id="search-camera-checkboxes">
+                  <!-- Dynamically populated (12 MP, 48 MP, 50 MP, 64 MP, 108 MP, etc.) -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 12. Display Size (Multi-Select Dropdown) -->
+          <div class="filter-group">
+            <label class="filter-group-title">📱 Screen Size</label>
+            <div class="custom-multiselect" id="multiselect-screensize">
+              <button type="button" class="multiselect-trigger" id="trigger-screensize" aria-haspopup="listbox" aria-expanded="false">
+                <span class="multiselect-label-text">Select Screen Size...</span>
+                <span class="multiselect-count-badge" style="display:none;">0</span>
+                <span class="multiselect-arrow">▾</span>
+              </button>
+              <div class="multiselect-menu" id="menu-screensize">
+                <div class="multiselect-actions-bar">
+                  <span>📱 Screen Diagonals</span>
+                  <button type="button" class="multiselect-quick-clear" data-target="screensize">Clear</button>
+                </div>
+                <div class="multiselect-options-list" id="search-screensize-pills">
+                  <!-- Dynamically populated screen size options -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </aside>
+
+      <!-- RIGHT SIDE: SEARCH RESULTS HEADER & 3-COLUMN PHONE CARDS GRID -->
+      <main class="results-main-area">
+        
+        <!-- Results Top Bar -->
+        <div class="results-top-header">
+          <div>
+            <h2 class="results-count-title">
+              Found <span class="results-count-num" id="results-count">0</span> Matching Smartphones
+            </h2>
+            <div class="active-chips-wrap" id="active-filter-chips">
+              <!-- Active filter chips will render here -->
+            </div>
+          </div>
+
+          <div class="results-controls-right">
+            <!-- Selected Items Counter & Clear Button -->
+            <div class="selected-summary-box" id="selected-summary-box" style="display: none;">
+              <span class="selected-badge" id="selected-count-badge">0 Selected</span>
+              <button class="btn-clear-selection" id="btn-clear-selection" type="button" title="Clear selection">Clear</button>
+            </div>
+
+            <label for="sort-by-select" class="sort-label">Sort by:</label>
+            <select id="sort-by-select" class="sort-select">
+              <option value="relevance">Featured & Relevant</option>
+              <option value="rating-desc">Highest Rated (Stars)</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="name-asc">Model Name (A-Z)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 3-Column Phone Cards Grid (as explicitly specified) -->
+        <div class="phones-3col-grid" id="phones-results-grid">
+          <!-- Dynamically rendered phone cards -->
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>PhoneVerse Mobile</h4>
+        <p>Your premier destination for brand new unlocked smartphones, certified trade-in deals, and high-performance mobile tech accessories.</p>
+        <p>📞 1-800-555-0199 &bull; ✉️ support@phoneverse.com</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop Brands</h4>
+        <ul class="footer-links">
+          <li><a href="/search.html?brand=Apple">Apple iPhones</a></li>
+          <li><a href="/search.html?brand=Samsung">Samsung Galaxy</a></li>
+          <li><a href="/search.html?brand=OnePlus">OnePlus Devices</a></li>
+          <li><a href="/search.html?brand=Redmi">Xiaomi & Redmi</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support & Policy</h4>
+        <ul class="footer-links">
+          <li><a href="/index.html#faq-sec">Warranty Policy</a></li>
+          <li><a href="/index.html#faq-sec">Returns & Exchanges</a></li>
+          <li><a href="/index.html#faq-sec">Shipping Rates</a></li>
+          <li><a href="#privacy">Privacy & Terms</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Store Locations</h4>
+        <ul class="footer-links">
+          <li><a href="#nyc">New York Flagship</a></li>
+          <li><a href="#sf">San Francisco Tech Hub</a></li>
+          <li><a href="#austin">Austin Innovation Center</a></li>
+          <li><a href="#chicago">Chicago Downtown</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 PhoneVerse Inc. All rights reserved. Payment Methods: Visa, MasterCard, Amex, Apple Pay, Google Pay.</p>
+      <p>Powered by Local Node.js & dynamic CSV catalog engine.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/data.js"></script>
+  <script src="/js/search.js"></script>
+  <script type="module" src="/agent-widget.js"></script>
+</body>
+</html>

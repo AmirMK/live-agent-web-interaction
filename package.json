@@ -1,0 +1,15 @@
+{
+  "name": "mock_phone_store",
+  "version": "1.0.0",
+  "description": "Mock Mobile Phone Store with Dynamic Search, Trending Weekly Phones, and PhoneVerse UI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^7.15.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
