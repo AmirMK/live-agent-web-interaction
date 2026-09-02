@@ -15,6 +15,8 @@ COPY . .
 ENV NODE_ENV=production
 ENV PORT=8080
 ENV GCS_BUCKET=agent_live_api_demo
+ENV GEMINI_API_KEY=""
+ENV LIVE_AGENT_PROXY_URL=""
 
 # Expose HTTP port
 EXPOSE 8080

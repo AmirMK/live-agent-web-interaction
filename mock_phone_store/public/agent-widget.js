@@ -11286,6 +11286,10 @@ function w0() {
   const b = typeof window < "u" && window !== window.parent, [x, N] = At.useState(!b), [f, M] = At.useState(!1), [D, O] = At.useState("Ready to Connect"), [X, m] = At.useState(!1), [v, j] = At.useState(!1), [U, w] = At.useState(!1), [st, yt] = At.useState([]), [dt, K] = At.useState([]), [it, vt] = At.useState(!1), [zt, Vt] = At.useState(!1), [Kt, jt] = At.useState(!1), [W, Xt] = At.useState([]), [te, qe] = At.useState(() => localStorage.getItem("live_agent_phone_api_key") || ""), [qt, Qt] = At.useState(() => localStorage.getItem("live_agent_phone_proxy_url") || "https://live-phone-agent-proxy-641879769713.us-central1.run.app"), [Ae, Zt] = At.useState(null), Tt = At.useRef(null), A = At.useRef(null), S = At.useRef(null);
   At.useEffect(() => {
     jd();
+    fetch("/api/config").then((Mt) => Mt.json()).then((Mt) => {
+      Mt.apiKey && !localStorage.getItem("live_agent_phone_api_key") && qe(Mt.apiKey);
+      Mt.proxyUrl && !localStorage.getItem("live_agent_phone_proxy_url") && Qt(Mt.proxyUrl);
+    }).catch(() => {});
     const Y = localStorage.getItem("live_agent_phone_facts");
     if (Y)
       try {

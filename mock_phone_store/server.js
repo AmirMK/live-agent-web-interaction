@@ -31,6 +31,14 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Runtime environment config endpoint for live agent
+app.get('/api/config', (req, res) => {
+  res.json({
+    apiKey: process.env.GEMINI_API_KEY || process.env.GENAI_API_KEY || '',
+    proxyUrl: process.env.LIVE_AGENT_PROXY_URL || process.env.PROXY_URL || ''
+  });
+});
+
 // Trending IDs endpoint (read locally from data/trends)
 app.get('/api/trends', (req, res) => {
   const trendsFile = path.join(__dirname, 'data', 'trends');
