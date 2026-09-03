@@ -95,7 +95,7 @@ mock_phone_store/
 
 ### `backend` — FastAPI WebSocket Proxy & Gemini Live Bridge
 
-The `backend` folder contains the lightweight Python server that acts as a secure, real-time bridge between browser clients (Chrome Extension or embedded website widget) and Google's **Gemini 2.0 Flash Live Multimodal API**. It handles low-latency bidirectional audio streaming, system prompt rules, context memory, and client-side tool execution routing.
+The `backend` folder contains the lightweight Python server that acts as a secure, real-time bridge between browser clients (Chrome Extension or embedded website widget) and Google's **Gemini 2.5 Flash Live Multimodal API**. It handles low-latency bidirectional audio streaming, system prompt rules, context memory, and client-side tool execution routing.
 
 ---
 
