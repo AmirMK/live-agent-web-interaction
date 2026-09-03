@@ -45,6 +45,7 @@ The `mock_phone_store` folder contains a complete mock e-commerce web applicatio
 #### Key Capabilities:
 * **Multi-Page Browsing:** Includes a landing/home page with guided search wizards and a dynamic search page with multi-faceted filtering (5G toggles, brands, price sliders, storage, camera specs, and sorting).
 * **Embedded Live Voice AI Agent:** Pre-integrated with the floating live agent widget (`agent-widget.js`), enabling visitors to talk naturally with an AI smartphone specialist that can directly control the website's filters and highlight recommended products.
+* **Decoupled DOM Controller (`dom-controller.js`):** Standalone, unbundled DOM automation module handling screen scraping, form filling, and spotlight highlighting—allowing developers to customize UI interactions without rebuilding the React widget.
 * **Realistic Catalog Dataset:** Pre-populated with rich smartphone mock data (models, processors, display sizes, cameras, ratings, and pricing).
 
 ---
@@ -53,23 +54,35 @@ The `mock_phone_store` folder contains a complete mock e-commerce web applicatio
 
 ```
 mock_phone_store/
+├── data/                       # Catalog datasets & trending feeds
+│   ├── data.csv                # Smartphone product dataset (specs, pricing, ratings)
+│   └── trends                  # Trending phone IDs featured on the home page
+│
 ├── public/                     # Static frontend web assets & pages
 │   ├── index.html              # Home page with feature highlights & search wizard
 │   ├── search.html             # Dynamic 3-column catalog grid & interactive filter sidebar
-│   ├── js/                     # Client-side store logic & in-memory catalog data
+│   ├── js/                     # Client-side store logic & DOM automation
+│   │   ├── dom-controller.js   # Agent DOM automation (screen scraping, form fills, card highlights)
 │   │   ├── search.js           # Reactive filtering engine & dynamic URL query sync
-│   │   ├── home.js             # Home page form handlers
-│   │   └── data.js             # Mock smartphone database
+│   │   ├── home.js             # Home page form handlers & trending deals loader
+│   │   └── data.js             # CSV parser & in-memory catalog search engine
 │   ├── css/                    # Store styling & responsive layout
+│   │   └── style.css           # Primary application stylesheet
+│   ├── assets/                 # Store imagery & fallback graphics
+│   │   ├── logo.jpeg           # Brand header logo
+│   │   ├── promo_banner.png    # Home promotional hero banner
+│   │   └── placeholder.svg     # SVG fallback image for missing product photos
 │   ├── agent-widget.js         # Embedded Voice AI Agent UI & WebSocket client
 │   ├── agent-widget.css        # Styles for the embedded AI widget drawer & visualizer
-│   └── pcm-processor.js        # AudioWorklet for real-time 16kHz PCM audio streaming
+│   └── pcm-processor.js        # AudioWorklet for real-time bidirectional PCM audio streaming
 │
-├── server.js                   # Node.js / Express web server to host the store
+├── server.js                   # Node.js / Express web server to host store & GCS image proxy
 ├── Dockerfile                  # Container definition for Cloud Run / Docker deployment
-└── package.json                # Project dependencies & start scripts
+├── .dockerignore               # Ignores local node_modules during Docker build
+├── .gitignore                  # Excludes local dependencies and scratch files from Git
+├── package.json                # Project dependencies & start scripts
+└── package-lock.json           # Pinned dependency tree
 ```
-
 
 ### `backend` — FastAPI WebSocket Proxy & Gemini Live Bridge
 
