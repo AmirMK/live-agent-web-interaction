@@ -14,7 +14,7 @@ COPY . .
 # Set default environment variables
 ENV NODE_ENV=production
 ENV PORT=8080
-ENV GCS_BUCKET=agent_live_api_demo
+ENV GCS_BUCKET=""
 ENV GEMINI_API_KEY=""
 ENV LIVE_AGENT_PROXY_URL=""
 
