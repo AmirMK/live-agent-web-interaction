@@ -33,6 +33,11 @@ chmod +x deploy.sh
 ```
 Once deployment finishes, the terminal output will display the public HTTPS URLs for both the **Live Phone Agent Proxy** and the **Mock Phone Store**. Open the store URL in any modern browser (Chrome recommended) to start interacting with the live agent!
 
+to start you may click on live chat bar on the let side and then click on setting gears to enter the url for **Live Phone Agent Proxy** as wel as your Gemini API Key.
+
+Then you can click on connect and start talking with the agent!
+
+
 To learn more about how each component works under the hood, how the project is structured, and how the services interact, explore the detailed breakdown of each folder below.
 
 
