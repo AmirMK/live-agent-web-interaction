@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Find the repository root (the directory where this script lives)
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # ==============================================================================
 # CONFIGURATION VARIABLES
 # ==============================================================================
