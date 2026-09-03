@@ -41,6 +41,8 @@ Then you can click on connect and start talking with the agent!
 
 You can see a short video here:
 
+[▶ Watch short_demo.mp4](https://github.com/AmirMK/live-agent-web-interaction/blob/main/short_demo.mp4)
+
 
 To learn more about how each component works under the hood, how the project is structured, and how the services interact, explore the detailed breakdown of each folder below.
 
