@@ -43,6 +43,10 @@ gcloud iam service-accounts create "${PROXY_SA_NAME}" \
   --display-name="Live Phone Agent Proxy SA" \
   --project="${PROJECT_ID}" || true
 
+# Wait for IAM propagation
+echo "==> Waiting 10s for IAM propagation..."
+sleep 10
+
 echo "==> Assigning roles/logging.logWriter and roles/aiplatform.user..."
 gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
   --member="serviceAccount:${PROXY_SA_EMAIL}" \
@@ -86,6 +90,10 @@ echo "==> Step 6: Creating Service Account: ${STORE_SA_NAME}..."
 gcloud iam service-accounts create "${STORE_SA_NAME}" \
   --display-name="Mock Phone Store SA" \
   --project="${PROJECT_ID}" || true
+
+# Wait for IAM propagation
+echo "==> Waiting 10s for IAM propagation..."
+sleep 10
 
 echo "==> Assigning roles/storage.objectViewer..."
 gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
