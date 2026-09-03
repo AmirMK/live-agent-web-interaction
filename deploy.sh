@@ -8,8 +8,8 @@ PROJECT_ID=$(gcloud config get-value project)
 REGION="us-central1"
 
 # Cloud Run Service Names (Variables)
-PROXY_SERVICE_NAME="live-phone-agent-proxy"
-STORE_SERVICE_NAME="mock-phone-store"
+PROXY_SERVICE_NAME="live-phone-agent-proxy-demo"
+STORE_SERVICE_NAME="mock-phone-store-demo"
 
 # Public GitHub repository
 REPO_URL="https://github.com/AmirMK/live-agent-web-interaction.git"
