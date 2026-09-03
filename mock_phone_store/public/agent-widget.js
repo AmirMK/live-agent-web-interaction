@@ -11283,7 +11283,7 @@ Guidelines:
 - When recommending phones, always mention key strengths like chipset, battery life, camera MP, and screen refresh rate.
 - Phone IDs (e.g., [ID: 12]) are strictly internal technical identifiers for tool arguments. NEVER speak, read aloud, or mention Phone ID numbers to the customer. Always refer to phones naturally by their model name.`;
 function w0() {
-  const b = typeof window < "u" && window !== window.parent, [x, N] = At.useState(!b), [f, M] = At.useState(!1), [D, O] = At.useState("Ready to Connect"), [X, m] = At.useState(!1), [v, j] = At.useState(!1), [U, w] = At.useState(!1), [st, yt] = At.useState([]), [dt, K] = At.useState([]), [it, vt] = At.useState(!1), [zt, Vt] = At.useState(!1), [Kt, jt] = At.useState(!1), [W, Xt] = At.useState([]), [te, qe] = At.useState(() => localStorage.getItem("live_agent_phone_api_key") || ""), [qt, Qt] = At.useState(() => localStorage.getItem("live_agent_phone_proxy_url") || "https://live-phone-agent-proxy-641879769713.us-central1.run.app"), [Ae, Zt] = At.useState(null), Tt = At.useRef(null), A = At.useRef(null), S = At.useRef(null);
+  const b = typeof window < "u" && window !== window.parent, [x, N] = At.useState(!b), [f, M] = At.useState(!1), [D, O] = At.useState("Ready to Connect"), [X, m] = At.useState(!1), [v, j] = At.useState(!1), [U, w] = At.useState(!1), [st, yt] = At.useState([]), [dt, K] = At.useState([]), [it, vt] = At.useState(!1), [zt, Vt] = At.useState(!1), [Kt, jt] = At.useState(!1), [W, Xt] = At.useState([]), [te, qe] = At.useState(() => localStorage.getItem("live_agent_phone_api_key") || ""), [qt, Qt] = At.useState(() => localStorage.getItem("live_agent_phone_proxy_url") || ""), [Ae, Zt] = At.useState(null), Tt = At.useRef(null), A = At.useRef(null), S = At.useRef(null);
   At.useEffect(() => {
     jd();
     fetch("/api/config").then((Mt) => Mt.json()).then((Mt) => {
@@ -11522,7 +11522,7 @@ function w0() {
             type: "text",
             value: qt,
             onChange: (Y) => ot(Y.target.value),
-            placeholder: "https://live-phone-agent-proxy-641879769713.us-central1.run.app",
+            placeholder: "https://your-proxy-server.run.app",
             className: "w-full px-3 py-2 text-xs bg-slate-950 border border-slate-700 rounded-md text-slate-200 focus:outline-none focus:border-sky-500 font-mono"
           }
         ),
