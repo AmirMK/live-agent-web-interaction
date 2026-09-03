@@ -35,6 +35,8 @@ Once deployment finishes, the terminal output will display the public HTTPS URLs
 
 to start you may click on live chat bar on the let side and then click on setting gears to enter the url for **Live Phone Agent Proxy** as wel as your Gemini API Key.
 
+![Alt text](repo_images/12.png)
+
 Then you can click on connect and start talking with the agent!
 
 
