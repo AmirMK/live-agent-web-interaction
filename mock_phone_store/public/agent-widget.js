@@ -11346,7 +11346,7 @@ function w0() {
           };
           window.addEventListener("message", Ot), Ye.push(() => window.removeEventListener("message", Ot));
         } else {
-          const Ot = G0();
+          const Ot = (typeof window !== "undefined" && window.PhoneAgentController && typeof window.PhoneAgentController.getScreenContent === "function") ? window.PhoneAgentController.getScreenContent() : G0();
           H("TOOL_RESULT", "Screen content extracted directly", Ot), Ee(I, Ot);
         }
       else if (I.name === "enter_form_data") {
@@ -11364,7 +11364,7 @@ function w0() {
           };
           window.addEventListener("message", Ct), Ye.push(() => window.removeEventListener("message", Ct));
         } else {
-          const Ct = L0(Ot, Et);
+          const Ct = (typeof window !== "undefined" && window.PhoneAgentController && typeof window.PhoneAgentController.enterFormData === "function") ? window.PhoneAgentController.enterFormData(Ot, Et) : L0(Ot, Et);
           H("TOOL_RESULT", "enter_form_data output directly", Ct), Ee(I, Ct);
         }
       } else if (I.name === "highlight_elements") {
@@ -11381,7 +11381,7 @@ function w0() {
           };
           window.addEventListener("message", Et), Ye.push(() => window.removeEventListener("message", Et));
         } else {
-          const Et = X0(Ot || []);
+          const Et = (typeof window !== "undefined" && window.PhoneAgentController && typeof window.PhoneAgentController.highlightElements === "function") ? window.PhoneAgentController.highlightElements(Ot || []) : X0(Ot || []);
           H("TOOL_RESULT", "highlight_elements output directly", Et), Ee(I, Et);
         }
       } else if (I.name === "manage_user_profile") {

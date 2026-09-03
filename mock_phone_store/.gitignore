@@ -1,6 +1,5 @@
 node_modules/
 .DS_Store
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+public/product_images/
+test_search.js
+*.rtf

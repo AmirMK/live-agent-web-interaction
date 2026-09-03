@@ -6,16 +6,20 @@ const { Storage } = require('@google-cloud/storage');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-const GCS_BUCKET_NAME = process.env.GCS_BUCKET || 'agent_live_api_demo';
+const GCS_BUCKET_NAME = process.env.GCS_BUCKET || '';
 
-// Initialize Google Cloud Storage Client
+// Initialize Google Cloud Storage Client (only if GCS_BUCKET is provided)
 let gcsBucket = null;
-try {
-  const storage = new Storage();
-  gcsBucket = storage.bucket(GCS_BUCKET_NAME);
-  console.log(`[GCS] Initialized Cloud Storage for bucket: gs://${GCS_BUCKET_NAME}`);
-} catch (err) {
-  console.warn(`[GCS] Cloud Storage client initialization deferred/fallback:`, err.message);
+if (GCS_BUCKET_NAME) {
+  try {
+    const storage = new Storage();
+    gcsBucket = storage.bucket(GCS_BUCKET_NAME);
+    console.log(`[GCS] Initialized Cloud Storage for bucket: gs://${GCS_BUCKET_NAME}`);
+  } catch (err) {
+    console.warn(`[GCS] Cloud Storage client initialization error:`, err.message);
+  }
+} else {
+  console.log(`[GCS] No GCS_BUCKET environment variable configured. Using local assets or SVG placeholder.`);
 }
 
 app.use(cors());
@@ -115,7 +119,7 @@ const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`====================================================`);
   console.log(`📱 PhoneVerse Mock Phone Store is running!`);
   console.log(`🌐 Server listening on: http://0.0.0.0:${PORT}`);
-  console.log(`☁️  GCS Bucket: gs://${GCS_BUCKET_NAME}`);
+  console.log(`☁️  GCS Bucket: ${GCS_BUCKET_NAME ? `gs://${GCS_BUCKET_NAME}` : 'None (Using local/placeholder images)'}`);
   console.log(`📄 Page 1 (Home):   http://localhost:${PORT}/index.html`);
   console.log(`🔍 Page 2 (Search): http://localhost:${PORT}/search.html`);
   console.log(`====================================================`);
