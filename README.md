@@ -1,7 +1,40 @@
 # live-agent-web-interaction
 
-Here is a concise and structured description for the `mock_phone_store` folder:
+An end-to-end reference implementation demonstrating real-time, multimodal voice AI interaction in an e-commerce web application. 
 
+The project pairs a realistic mock smartphone storefront (**PhoneVerse**) with Google's **Gemini Live Multimodal API / Vertex AI**, allowing visitors to talk directly with an AI specialist in real time. Through bidirectional WebSocket audio streaming and structured tool calls, the AI agent can autonomously navigate, search, filter products, and highlight recommendations right inside the user's active browser window.
+
+---
+
+## ⚡ Quick Deployment on Google Cloud (Cloud Shell)
+
+Deploy the entire solution—including IAM roles, Cloud Storage bucket, catalog assets, and both Cloud Run microservices—in just a few minutes using **Google Cloud Shell**.
+
+### 1. Open Google Cloud Shell 
+
+### 2. Enable Required GCP APIs
+Enable the necessary services before running the deployment script:
+```bash
+gcloud services enable \
+ run.googleapis.com \
+ artifactregistry.googleapis.com \
+ cloudbuild.googleapis.com \
+ aiplatform.googleapis.com \
+ storage.googleapis.com
+```
+### 3. Download and Run `deploy.sh`
+You can either clone the repo or download `deploy.sh` directly and execute it:
+
+```bash
+# Option A: Clone and run directly
+git clone https://github.com/AmirMK/live-agent-web-interaction.git
+cd live-agent-web-interaction
+chmod +x deploy.sh
+./deploy.sh
+```
+Once deployment finishes, the terminal output will display the public HTTPS URLs for both the **Live Phone Agent Proxy** and the **Mock Phone Store**. Open the store URL in any modern browser (Chrome recommended) to start interacting with the live agent!
+
+To learn more about how each component works under the hood, how the project is structured, and how the services interact, explore the detailed breakdown of each folder below.
 
 
 ### `mock_phone_store` — Mock Phone E-Commerce Website & Embedded Live Agent
