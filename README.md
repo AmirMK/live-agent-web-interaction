@@ -61,3 +61,69 @@ backend/
 ├── requirements.txt      # Python dependencies (fastapi, uvicorn, websockets, python-dotenv)
 └── Dockerfile            # Container definition for Google Cloud Run / Docker deployment
 ```
+### `Deploy.sh` script - Architecture & Deployment Overview
+This script automates the end-to-end setup and deployment of a full-stack demo showcasing a mock e-commerce phone store powered by a real-time, interactive Vertex AI live agent.
+**Automated Deployment Script for Live Agent Phone Store Demo**  
+
+This script automates the end-to-end setup and deployment on Google Cloud Platform:
+- **Live Agent Proxy (`Cloud Run`)**: Deploys a backend proxy configured with Vertex AI and Cloud Logging permissions to orchestrate communication with the live agent.
+- **Product Assets (`Google Cloud Storage`)**: Creates a GCS bucket and uploads the phone store’s product catalog images.
+- **Mock Phone Store (`Cloud Run`)**: Deploys a mock e-commerce web application featuring an embedded live agent interface that users can interact with in real time, routing agent requests through the backend proxy.
+
+### Component Breakdown
+
+#### 1. Repository Setup (`git clone`)
+* **What it does:** Downloads the project source code from the GitHub repository (`live-agent-web-interaction`), which contains:
+ * `/backend`: Source code for the backend proxy handling Vertex AI communication.
+ * `/mock_phone_store`: Source code for the customer-facing web storefront with an embedded agent widget.
+ * `/product_images`: Catalog imagery for phones and accessories.
+
+---
+
+#### 2. Live Agent Proxy (`Cloud Run`)
+* **Service Account & IAM Roles:**
+ * **`roles/logging.logWriter`**: Grants permission to ingest and stream runtime application logs and error diagnostics into Google Cloud Logging.
+ * **`roles/aiplatform.user`**: Grants permission to authenticate and invoke Vertex AI APIs, foundation models (e.g., Gemini Live / Vertex AI Agent Builder), and prediction endpoints.
+* **What it does:** 
+ * Acts as a secure backend gateway between the client-side browser and Google Cloud's Vertex AI services.
+ * Prevents exposing sensitive GCP credentials or API keys directly to the client browser by managing authentication via its attached Service Account.
+ * Facilitates live bidirectional communication (such as audio/text streaming) with the agent model.
+
+---
+
+#### 3. Asset Storage (`Google Cloud Storage`)
+* **What it does:**
+ * Creates a globally unique Google Cloud Storage (GCS) bucket within your selected region (`us-central1`).
+ * Uploads all local phone images from the `/product_images` directory into `gs://<BUCKET_NAME>/product_images/`.
+ * Decouples heavy binary static assets (product photos) from the application container image, keeping container builds lightweight and fast.
+
+---
+
+#### 4. Mock Phone Store (`Cloud Run`)
+* **Service Account & IAM Roles:**
+ * **`roles/storage.objectViewer`**: Grants read-only access to download and serve the product images stored in the GCS bucket. Following the principle of least privilege, this service account cannot modify or delete bucket contents.
+* **Environment Variable (`GCS_BUCKET`):**
+ * Injects the created bucket name into the web server runtime environment so the storefront dynamically loads product photos from the correct storage location.
+* **What it does:**
+ * Serves the public-facing e-commerce web application where customers browse phones and plans.
+ * Embeds an interactive live agent chat/voice interface directly onto the storefront pages.
+ * Routes customer messages and interactions from the browser widget directly to the **Live Agent Proxy** Cloud Run service.
+
+---
+
+### End-to-End Workflow
+
+```text
+[ End User Browser ]
+    │
+    ├─► 1. Loads Web Storefront & Product Images
+    │   └─► [ Mock Phone Store (Cloud Run) ] ──(reads)──► [ GCS Bucket ]
+    │
+    └─► 2. Interacts with Embedded Live Agent
+       └─► [ Backend Proxy (Cloud Run) ] ──(invokes)──► [ Vertex AI / Gemini ]
+```
+
+1. **Browsing:** The user accesses the **Mock Phone Store** web URL. The application reads images directly from the **GCS Bucket** and displays the phone catalog.
+2. **Interaction:** The user opens the embedded live agent on the store page and begins speaking or chatting.
+3. **Orchestration:** The store routes the session requests to the **Live Agent Proxy**.
+4. **Inference:** The proxy uses its IAM identity (`aiplatform.user`) to communicate with **Vertex AI**, streaming natural language responses and real-time product recommendations back to the user.
