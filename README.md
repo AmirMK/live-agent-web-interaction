@@ -26,7 +26,6 @@ gcloud services enable \
 You can either clone the repo or download `deploy.sh` directly and execute it:
 
 ```bash
-# Option A: Clone and run directly
 git clone https://github.com/AmirMK/live-agent-web-interaction.git
 cd live-agent-web-interaction
 chmod +x deploy.sh
