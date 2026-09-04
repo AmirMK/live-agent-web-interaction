@@ -22,7 +22,35 @@ gcloud services enable \
  aiplatform.googleapis.com \
  storage.googleapis.com
 ```
-### 3. Download and Run `deploy.sh`
+### 3. Configure Default Build Service Account Permissions
+When deploying services from source code (`--source .`), Cloud Run uses Cloud Build in the background to package container images and store them in Artifact Registry. In newly created GCP projects, Google adheres to least privilege and does not grant automatic build permissions to the default Compute Engine service account.
+
+Grant the required storage, logging, and artifact registry roles to allow Cloud Build to package and push the application containers:
+
+```bash
+PROJECT_ID=$(gcloud config get-value project)
+PROJECT_NUMBER=(gcloudprojectsdescribe"{PROJECT_ID}" --format='value(projectNumber)')
+COMPUTE_SA="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
+
+echo "Granting build permissions to: ${COMPUTE_SA}"
+
+# Allow reading uploaded source zip files from GCS
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+  --member="serviceAccount:${COMPUTE_SA}" \
+  --role="roles/storage.objectViewer"
+
+# Allow writing build logs
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+  --member="serviceAccount:${COMPUTE_SA}" \
+  --role="roles/logging.logWriter"
+
+# Allow pushing built container images to Artifact Registry
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+  --member="serviceAccount:${COMPUTE_SA}" \
+  --role="roles/artifactregistry.writer"
+```
+
+### 4. Download and Run `deploy.sh`
 You can either clone the repo or download `deploy.sh` directly and execute it:
 
 ```bash
